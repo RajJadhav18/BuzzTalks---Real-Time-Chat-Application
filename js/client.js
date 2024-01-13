@@ -18,6 +18,21 @@
         }
     };
 
+
+    const updateOnlineParticipants = (onlineUsers) => {
+        const participantsContainer = document.querySelector('.participants-container');
+        participantsContainer.innerHTML = ''; // Clear existing participants
+    
+        // Add participants dynamically based on the onlineUsers array
+        onlineUsers.forEach(userName => {
+            const participantElement = document.createElement('div');
+            participantElement.className = 'participant';
+            participantElement.textContent = userName;
+            participantsContainer.appendChild(participantElement);
+        });
+    };
+    
+
     //if the form gets submitted, send server the message
     form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -35,16 +50,21 @@
     socket.on('user-joined', name => {
        // console.log(`User ${name} joined the chat`);
         append(`${name} joined the chat`, 'right');
+
     });
 
     //if someone sends a message, broadcast it to other people
     socket.on('receive', data => {
         // console.log(`User ${name} joined the chat`);
          append(`${data.name}: ${data.message}`, 'left');
-     });
+     });    
 
     //if someone leaves the chat, let others know
     socket.on('left', name => {
     // console.log(`User ${name} joined the chat`);
     append(`${name} left the chat`, 'left');
+    });
+
+    socket.on('updateOnlineUsers', (onlineUsers) => {
+        updateOnlineParticipants(onlineUsers);
     });
