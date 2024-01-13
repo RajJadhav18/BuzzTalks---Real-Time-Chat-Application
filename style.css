@@ -21,22 +21,51 @@ h1{
 
 
 .container{
-    /* background-image: url('logo-no-background.png');
-    background-size: 50%;
-    background-size: cover;
-    background-position: center; */
-
-  /* Specify other background properties if needed */
-  background-repeat: no-repeat;
-  border-radius: 13px;
+    
+    background-repeat: no-repeat;
+    border-radius: 13px;
     max-width: 955px;
     border: 1px solid black;
     margin: auto;
     height: 60vh;
     overflow-y:auto;
     margin-bottom: 23px;
+    scrollbar-width: none;
+    scrollbar-shadow-color: aqua;
 
 
+}
+.participants-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    display: flex;
+    scrollbar-width: none;
+}
+
+.participant {
+    background-color: aquamarine;
+    display: inline-block;
+    min-width: 100px;
+    padding: 5px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    
+}
+
+.container::-webkit-scrollbar {
+    width: 0;
+}
+
+.container::-webkit-scrollbar-track {
+    background-color:rgb(113, 201, 206);
+}
+
+.container::-webkit-scrollbar-thumb {
+    background-color: rgb(113, 201, 206);
+}
+.participants-container::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
 }
 .message{
     background-color:#F5FCCD;
