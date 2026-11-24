@@ -1,52 +1,95 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>BuzzTalks</title>
-    <link rel="icon" href="awesome_chat_wing_logo_design-removebg.png">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="BuzzTalks is a simple real-time chat room for conversations with friends.">
+  <title>BuzzTalks — Real-time chat</title>
+  <link rel="icon" type="image/png" href="/logo-no-background.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script defer src="/socket.io/socket.io.js"></script>
+  <script defer src="/js/client.js"></script>
 </head>
 <body>
-    <!-- <input id="input" type="text" placeholder="Enter message" /> -->
-    <!-- <button id="button">Send</button> -->
-    <ul id="messages"></ul>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="BuzzTalks home">
+        <span class="brand-mark"><img src="/logo-no-background.png" alt=""></span>
+        <span class="brand-copy"><strong>BuzzTalks</strong><small>Good conversations happen here</small></span>
+      </a>
+      <div class="topbar-right">
+        <div class="room-pill"><span class="room-hash">#</span> general</div>
+        <div class="connection" id="connection-status" role="status" aria-live="polite">
+          <span class="connection-dot"></span><span class="connection-label">Connecting</span>
+        </div>
+        <button class="profile-chip" id="profile-button" type="button" aria-label="Change display name">
+          <span class="avatar avatar-small" id="profile-avatar">?</span><span id="profile-name">Guest</span>
+        </button>
+      </div>
+    </header>
 
-    <script defer src="/socket.io/socket.io.js"></script>
-    <script defer src="js/client.js">
-     
-    </script>
+    <main class="workspace">
+      <section class="chat-panel" aria-label="General chat">
+        <div class="chat-heading">
+          <div>
+            <p class="eyebrow">THE LOBBY</p>
+            <h1><span class="heading-hash">#</span> general</h1>
+            <p class="heading-description">A little corner of the internet to catch up.</p>
+          </div>
+          <div class="heading-count"><span class="count-icon" aria-hidden="true">◉</span><span id="online-count">0 online</span></div>
+        </div>
 
+        <div class="chat-content" id="chat-content">
+          <div class="welcome-card" id="welcome-card">
+            <div class="welcome-icon" aria-hidden="true">✳</div>
+            <div><strong>You made it to the lobby.</strong><p>Say hello and start a conversation. Messages are temporary and clear when the server restarts.</p></div>
+          </div>
+          <div class="messages" id="messages" role="log" aria-live="polite" aria-relevant="additions text"></div>
+          <div class="typing-indicator" id="typing-indicator" aria-live="polite" hidden><span class="typing-dots"><i></i><i></i><i></i></span><span id="typing-label"></span></div>
+        </div>
 
-<nav>
-    
-    <img class="logo" src="awesome_chat_wing_logo_design-removebg.png" alt="">
-    <h1>Welcome to BuzzTalks</h1>   
-</nav>
+        <form class="composer" id="send-container" autocomplete="off">
+          <label class="sr-only" for="messageInp">Write a message</label>
+          <input id="messageInp" name="message" type="text" maxlength="1000" placeholder="Message #general" autocomplete="off" disabled>
+          <span class="composer-hint">Enter to send</span>
+          <button class="send-button" type="submit" aria-label="Send message" disabled>
+            <span>Send</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.2 9.1 16.8 3.5l-4.4 13-2.5-5.1-6.7-2.3Zm6.7 2.3 6.9-7.9"/></svg>
+          </button>
+        </form>
+        <p class="privacy-note"><span aria-hidden="true">✦</span> Be kind. Keep it human.</p>
+      </section>
 
-<div class="container">
-    <!-- <div class="message right">Raj:hi</div>
-    <div class="message left">Xx:Hello</div> -->
-    <div class="participants-container">
-        <!-- <div class="participant">User 1</div>
-        <div class="participant">User 2</div>
-        <div class="participant">User 3</div>
-        <div class="participant">User 1</div>
-        <div class="participant">User 2</div>
-        <div class="participant">User 3</div>
-        <div class="participant">User 1</div>
-        <div class="participant">User 2</div>
-        <div class="participant">User 3</div> -->
-        <!-- Add more participant elements as needed -->
-    </div>
-</div>
+      <aside class="people-panel" aria-label="People in the chat">
+        <div class="people-heading"><div><p class="eyebrow">YOUR ROOM</p><h2>People <span id="people-count">0</span></h2></div><span class="people-live"><i></i> Live</span></div>
+        <div class="room-card"><div class="room-card-icon">#</div><div><strong>general</strong><span>Everyone is welcome</span></div><span class="room-chevron">⌄</span></div>
+        <div class="members-heading"><span>IN THIS ROOM</span><span id="member-count">0</span></div>
+        <div class="participants-container" id="participants" role="list" aria-live="polite">
+          <div class="empty-members">You're the first one here.<br>Invite someone to chat.</div>
+        </div>
+        <div class="side-footer"><span class="side-footer-mark">✳</span><p><strong>Small room, good energy.</strong><br>Conversations are better together.</p></div>
+      </aside>
+    </main>
+    <footer class="app-footer"><span>BUZZTALKS</span><span>Made for the moments in between.</span><span class="footer-version">REAL-TIME CHAT</span></footer>
+  </div>
 
-
-
-<div class="send">  
-    <form action="#" id="send-container">
-        <input type="text" name="messageInp" id="messageInp">
-        <button class="btn" type="submit">Send</button>
+  <div class="name-gate" id="name-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+    <form class="gate-card" id="name-form">
+      <div class="gate-logo"><img src="/logo-no-background.png" alt=""></div>
+      <p class="eyebrow">WELCOME TO THE LOBBY</p>
+      <h2 id="gate-title">Good to have you here.</h2>
+      <p class="gate-description">Pick a name so people know who's saying hello.</p>
+      <label for="name-input">Your display name</label>
+      <input id="name-input" name="name" type="text" maxlength="32" placeholder="e.g. Raj" autocomplete="nickname" required>
+      <p class="gate-error" id="gate-error" role="alert" hidden></p>
+      <button class="join-button" type="submit">Join the conversation <span aria-hidden="true">→</span></button>
+      <p class="gate-footnote">No account needed. Just be kind.</p>
     </form>
-</div>
+  </div>
 
+  <audio id="message-sound" src="/ting.mp3" preload="none"></audio>
 </body>
 </html>
